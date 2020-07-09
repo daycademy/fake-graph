@@ -29,5 +29,6 @@ module.exports = {
     'import/extensions': 'off',
     'no-console': 'off',
     'no-unused-vars': 'off',
+    'import/no-cycle': 'off',
   },
 };
