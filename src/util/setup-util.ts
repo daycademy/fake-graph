@@ -1,5 +1,4 @@
 import faker from 'faker';
-/* eslint-disable-next-line */
 import { User } from '../entity/User';
 
 export const users: Array<User> = [];
