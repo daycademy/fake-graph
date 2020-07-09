@@ -6,10 +6,10 @@ export class User {
   id: number;
 
   @Field()
-  firstName: string;
+  username: string;
 
   @Field()
-  lastName: string;
+  fullname: string;
 
   @Field()
   age: number;
