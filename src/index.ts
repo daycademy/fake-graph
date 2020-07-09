@@ -5,6 +5,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { UserResolver } from './resolvers/UserResolver';
 import { insertData } from './util/setup-util';
+import loaders from './loaders';
 
 (async () => {
   const app = express();
@@ -18,7 +19,7 @@ import { insertData } from './util/setup-util';
       resolvers: [UserResolver],
       validate: true,
     }),
-    context: ({ req, res }) => ({ req, res }),
+    context: ({ req, res }) => ({ req, res, loaders }),
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
