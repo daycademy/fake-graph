@@ -12,14 +12,9 @@ export class PostResolver {
     return Post.find();
   }
 
-  @Query(() => Post)
+  @Query(() => Post, { nullable: true })
   @UseMiddleware(rateLimit)
-  async post(@Arg('id') id: number): Promise<Post> {
-    const post = await Post.findOne({ where: { id } });
-    if (!post) {
-      throw new Error(`cannot find post with post.id ${id}`);
-    }
-
-    return post;
+  async post(@Arg('id') id: number): Promise<Post | undefined> {
+    return Post.findOne({ where: { id } });
   }
 }
