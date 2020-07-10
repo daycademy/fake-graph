@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "graphql": "^14.5.8",
+    "graphql-rate-limit": "^2.0.1",
     "reflect-metadata": "^0.1.10",
     "sqlite3": "^5.0.0",
     "type-graphql": "^0.17.5",
