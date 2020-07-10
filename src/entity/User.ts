@@ -1,4 +1,6 @@
-import { ObjectType, Field, ID } from 'type-graphql';
+import {
+  ObjectType, Field, ID, Int,
+} from 'type-graphql';
 import {
   Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity,
 } from 'typeorm';
@@ -19,7 +21,7 @@ export class User extends BaseEntity {
   @Column()
   fullname: string;
 
-  @Field()
+  @Field(() => Int)
   @Column('int')
   age: number;
 

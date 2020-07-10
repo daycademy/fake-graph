@@ -1,5 +1,5 @@
 import {
-  Resolver, Query, UseMiddleware, Arg,
+  Resolver, Query, UseMiddleware, Arg, Int,
 } from 'type-graphql';
 import { Post } from '../entity/Post';
 import { rateLimit } from '../middleware/rateLimit';
@@ -14,7 +14,7 @@ export class PostResolver {
 
   @Query(() => Post, { nullable: true })
   @UseMiddleware(rateLimit)
-  async post(@Arg('id') id: number): Promise<Post | undefined> {
+  async post(@Arg('id', () => Int) id: number): Promise<Post | undefined> {
     return Post.findOne({ where: { id } });
   }
 }
