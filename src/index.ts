@@ -6,6 +6,7 @@ import { buildSchema } from 'type-graphql';
 import { UserResolver } from './resolvers/UserResolver';
 import { insertData } from './util/setup-util';
 import loaders from './loaders';
+import { PostResolver } from './resolvers/PostResolver';
 
 (async () => {
   const app = express();
@@ -14,7 +15,7 @@ import loaders from './loaders';
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, PostResolver],
       validate: true,
     }),
     context: ({ req, res }) => ({ req, res, loaders }),
