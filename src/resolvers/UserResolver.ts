@@ -1,5 +1,5 @@
 import {
-  Query, Resolver, FieldResolver, Ctx, Root, UseMiddleware,
+  Query, Resolver, FieldResolver, Ctx, Root, UseMiddleware, Arg, Int,
 } from 'type-graphql';
 import { User } from '../entity/User';
 import { MyContext } from '../MyContext';
@@ -11,6 +11,12 @@ export class UserResolver {
   @UseMiddleware(rateLimit)
   users(): Promise<User[]> {
     return User.find();
+  }
+
+  @Query(() => User)
+  @UseMiddleware(rateLimit)
+  user(@Arg('id', () => Int) id: number): Promise<User | undefined> {
+    return User.findOne({ where: { id } });
   }
 
   @FieldResolver()
