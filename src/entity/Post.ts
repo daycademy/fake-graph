@@ -21,7 +21,7 @@ export class Post extends BaseEntity {
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.posts)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn()
   user: Promise<User>;
 
   @Field(() => Video)
