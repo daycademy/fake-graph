@@ -1,8 +1,9 @@
 import { ObjectType, Field, ID } from 'type-graphql';
 import {
-  Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity,
+  Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity, OneToOne,
 } from 'typeorm';
 import { User } from './User';
+import Video from './Video';
 
 @ObjectType()
 @Entity()
@@ -22,4 +23,8 @@ export class Post extends BaseEntity {
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: 'userId' })
   user: Promise<User>;
+
+  @Field(() => Video)
+  @OneToOne(() => Video, (video) => video.post)
+  video: Promise<Video>;
 }

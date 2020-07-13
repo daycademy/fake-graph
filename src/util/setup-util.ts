@@ -1,6 +1,7 @@
 import faker from 'faker';
 import { User } from '../entity/User';
 import { Post } from '../entity/Post';
+import Video from '../entity/Video';
 
 const ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -17,6 +18,12 @@ export function insertData(): void {
       id,
       text: faker.lorem.paragraph(),
       userId: id,
+    });
+
+    await Video.insert({
+      id,
+      url: 'localhost:4000',
+      postId: id,
     });
   });
 }
