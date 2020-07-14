@@ -6,7 +6,7 @@ type BatchVideo = (keys: readonly number[]) => Promise<Video[][]>;
 
 const batchVideos: BatchVideo = async (keys: readonly number[]) => {
   const videos = await Video.find({
-    where: { id: In(keys as number[]) },
+    where: { postId: In(keys as number[]) },
   });
 
   const videosMap: Record<number, Video[]> = {};
