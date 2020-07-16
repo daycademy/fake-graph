@@ -4,12 +4,17 @@ import {
 import { User } from '../entity/User';
 import { MyContext } from '../MyContext';
 import { rateLimit } from '../middleware/rateLimit';
+import { UserRole } from '../entity/enums/UserRole';
 
 @Resolver(() => User)
 export class UserResolver {
   @Query(() => [User])
   @UseMiddleware(rateLimit)
-  users(): Promise<User[]> {
+  users(@Arg('role', () => UserRole, { nullable: true }) userRole?: UserRole): Promise<User[]> {
+    if (userRole) {
+      return User.find({ where: { role: userRole } });
+    }
+
     return User.find();
   }
 
