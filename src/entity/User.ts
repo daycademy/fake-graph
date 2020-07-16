@@ -5,6 +5,7 @@ import {
   Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity,
 } from 'typeorm';
 import { Post } from './Post';
+import { UserRole } from './enums/UserRole';
 
 @ObjectType()
 @Entity()
@@ -12,6 +13,10 @@ export class User extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Field(() => UserRole)
+  @Column()
+  role: string;
 
   @Field()
   @Column()
