@@ -31,9 +31,9 @@ export class UserResolver {
     return loaders.postLoader.load(user.id);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => User)
   @UseMiddleware(rateLimit)
-  async register(@Arg('data') newUserData: RegisterUserInput) {
+  async register(@Arg('data') newUserData: RegisterUserInput): Promise<User> {
     /* eslint-disable-next-line */
     const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (!re.test(newUserData.email)) {
@@ -45,6 +45,12 @@ export class UserResolver {
       throw new Error('user already exists');
     }
 
-    return true;
+    return User.create({
+      email: newUserData.email,
+      age: newUserData.age,
+      role: UserRole.USER.toString(),
+      fullname: newUserData.fullname,
+      username: newUserData.username,
+    });
   }
 }
