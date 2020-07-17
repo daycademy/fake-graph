@@ -10,6 +10,7 @@ export function insertData(): void {
   ids.forEach(async (id) => {
     await User.insert({
       id,
+      email: faker.internet.email(),
       role: faker.random.number(100) % 2 === 0
         ? UserRole.ADMIN.toString()
         : UserRole.USER.toString(),
