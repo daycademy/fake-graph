@@ -5,6 +5,7 @@ import { User } from '../entity/User';
 import { MyContext } from '../MyContext';
 import { rateLimit } from '../middleware/rateLimit';
 import { UserRole } from '../entity/enums/UserRole';
+import { RegisterUserInput } from './RegisterUserInput';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -32,14 +33,14 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   @UseMiddleware(rateLimit)
-  async register(@Arg('email') email: string, @Arg('password') _password: string) {
+  async register(@Arg('data') newUserData: RegisterUserInput) {
     /* eslint-disable-next-line */
     const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!re.test(email)) {
+    if (!re.test(newUserData.email)) {
       throw new Error('email is not in a valid format');
     }
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email: newUserData.email } });
     if (user) {
       throw new Error('user already exists');
     }
