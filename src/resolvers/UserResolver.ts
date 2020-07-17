@@ -1,5 +1,5 @@
 import {
-  Query, Resolver, FieldResolver, Ctx, Root, UseMiddleware, Arg, Int,
+  Query, Resolver, FieldResolver, Ctx, Root, UseMiddleware, Arg, Int, Mutation,
 } from 'type-graphql';
 import { User } from '../entity/User';
 import { MyContext } from '../MyContext';
@@ -28,5 +28,22 @@ export class UserResolver {
   @UseMiddleware(rateLimit)
   posts(@Ctx() { loaders }: MyContext, @Root() user: User) {
     return loaders.postLoader.load(user.id);
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(rateLimit)
+  async register(@Arg('email') email: string, @Arg('password') _password: string) {
+    /* eslint-disable-next-line */
+    const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    if (!re.test(email)) {
+      throw new Error('email is not in a valid format');
+    }
+
+    const user = await User.findOne({ where: { email } });
+    if (user) {
+      throw new Error('user already exists');
+    }
+
+    return true;
   }
 }
