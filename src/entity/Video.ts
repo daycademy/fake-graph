@@ -1,13 +1,13 @@
 import {
-  BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn,
+  BaseEntity, Entity, Column, OneToOne, JoinColumn, PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ObjectType, Field, Int } from 'type-graphql';
+import { ObjectType, Field } from 'type-graphql';
 import { Post } from './Post';
+import { INode } from './interfaces/INode';
 
-@ObjectType()
+@ObjectType({ implements: INode })
 @Entity()
-export default class Video extends BaseEntity {
-  @Field(() => Int)
+export default class Video extends BaseEntity implements INode {
   @PrimaryGeneratedColumn()
   id: number;
 

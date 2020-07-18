@@ -1,14 +1,14 @@
-import { ObjectType, Field, ID } from 'type-graphql';
+import { ObjectType, Field } from 'type-graphql';
 import {
-  Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity, OneToOne,
+  Entity, Column, ManyToOne, JoinColumn, BaseEntity, OneToOne, PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './User';
 import Video from './Video';
+import { INode } from './interfaces/INode';
 
-@ObjectType()
+@ObjectType({ implements: INode })
 @Entity()
-export class Post extends BaseEntity {
-  @Field(() => ID)
+export class Post extends BaseEntity implements INode {
   @PrimaryGeneratedColumn()
   id: number;
 
