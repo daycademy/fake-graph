@@ -1,5 +1,5 @@
 import {
-  ObjectType, Field, Int,
+  ObjectType, Field, Int, Directive,
 } from 'type-graphql';
 import {
   Entity, Column, OneToMany, BaseEntity, PrimaryGeneratedColumn,
@@ -37,4 +37,8 @@ export class User extends BaseEntity implements INode {
   @Field(() => [Post], { defaultValue: [] })
   @OneToMany(() => Post, (post) => post.user)
   posts: Promise<Post[]>;
+
+  @Directive('@deprecated(reason: "Description is useless for users")')
+  @Field()
+  description: string;
 }
