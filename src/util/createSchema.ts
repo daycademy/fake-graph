@@ -1,8 +1,13 @@
 import { buildSchema } from 'type-graphql';
 import allResolvers from '../modules';
 
-const resolvers: any[] = [];
-Object.entries(allResolvers).forEach((resolver) => resolvers.push(resolver));
+// TODO: Fix to normal index import
+const resolvers: [Function, ...Function[]] = [
+  allResolvers.CommonResolver,
+  allResolvers.PostResolvers.GetPosts,
+  allResolvers.UserResolvers.GetUsers,
+  allResolvers.UserResolvers.Register,
+];
 
 export const createSchema = () => buildSchema({
   resolvers,
