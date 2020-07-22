@@ -28,7 +28,7 @@
     "graphql-rate-limit": "^2.0.1",
     "reflect-metadata": "^0.1.10",
     "sqlite3": "^5.0.0",
-    "type-graphql": "^0.17.5",
+    "type-graphql": "^1.0.0-rc.3",
     "typeorm": "^0.2.25"
   },
   "scripts": {
