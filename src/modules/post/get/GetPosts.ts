@@ -1,12 +1,12 @@
 import {
-  Resolver, Query, UseMiddleware, Arg, Int, FieldResolver, Ctx, Root,
+  Resolver, Query, UseMiddleware, Arg, Int, Root, FieldResolver, Ctx,
 } from 'type-graphql';
-import { Post } from '../entity/Post';
-import { rateLimit } from '../middleware/rateLimit';
-import { MyContext } from '../MyContext';
+import { Post } from '../../../entity/Post';
+import { rateLimit } from '../../../middleware/rateLimit';
+import { MyContext } from '../../../MyContext';
 
 @Resolver(() => Post)
-export class PostResolver {
+export class GetPosts {
   @Query(() => [Post])
   @UseMiddleware(rateLimit)
   posts(): Promise<Post[]> {

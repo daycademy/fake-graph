@@ -1,9 +1,10 @@
 import { buildSchema } from 'type-graphql';
-import { UserResolver } from '../resolvers/UserResolver';
-import { PostResolver } from '../resolvers/PostResolver';
-import { CommonResolver } from '../resolvers/CommonResolver';
+import allResolvers from '../modules';
+
+const resolvers: any[] = [];
+Object.entries(allResolvers).forEach((resolver) => resolvers.push(resolver));
 
 export const createSchema = () => buildSchema({
-  resolvers: [UserResolver, PostResolver, CommonResolver],
+  resolvers,
   validate: true,
 });
