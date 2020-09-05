@@ -3,18 +3,42 @@ import express from 'express';
 import { createConnection } from 'typeorm';
 import { ApolloServer } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
+import costAnalysis from 'graphql-cost-analysis';
 import { insertData } from './util/setup-util';
 import loaders from './loaders';
 import { createSchema } from './util/createSchema';
+
+class CostAnalysisApolloServer extends ApolloServer {
+  async createGraphQLServerOptions(
+    req: express.Request,
+    res: express.Response,
+  ) {
+    const options = await super.createGraphQLServerOptions(req, res);
+
+    options.validationRules = options.validationRules
+      ? options.validationRules.slice()
+      : [];
+    options.validationRules.push(
+      costAnalysis({
+        variables: req.body.variables,
+        maximumCost: 1000,
+      }),
+    );
+
+    return options;
+  }
+}
 
 (async () => {
   const app = express();
 
   await createConnection();
 
-  const apolloServer = new ApolloServer({
+  const apolloServer = new CostAnalysisApolloServer({
     schema: await createSchema(),
-    validationRules: [depthLimit(10)],
+    validationRules: [
+      depthLimit(10),
+    ],
     context: ({ req, res }) => ({ req, res, loaders }),
   });
 
