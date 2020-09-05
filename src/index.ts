@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import express from 'express';
 import { createConnection } from 'typeorm';
 import { ApolloServer } from 'apollo-server-express';
+import depthLimit from 'graphql-depth-limit';
 import { insertData } from './util/setup-util';
 import loaders from './loaders';
 import { createSchema } from './util/createSchema';
@@ -13,6 +14,7 @@ import { createSchema } from './util/createSchema';
 
   const apolloServer = new ApolloServer({
     schema: await createSchema(),
+    validationRules: [depthLimit(10)],
     context: ({ req, res }) => ({ req, res, loaders }),
   });
 
