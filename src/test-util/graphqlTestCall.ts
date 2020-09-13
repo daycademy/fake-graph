@@ -1,10 +1,18 @@
-import { GraphQLSchema } from 'graphql';
+import { GraphQLSchema, graphql } from 'graphql';
 import { createSchema } from '../util/createSchema';
 
 let schema: GraphQLSchema;
 
-export const graphqlTestCall = async () => {
+export const graphqlTestCall = async (query: any, variables?: any) => {
   if (!schema) {
-    await createSchema();
+    schema = await createSchema();
   }
+
+  return graphql(
+    schema,
+    query,
+    undefined,
+    {},
+    variables,
+  );
 };
