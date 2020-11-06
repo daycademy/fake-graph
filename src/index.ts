@@ -40,6 +40,8 @@ class CostAnalysisApolloServer extends ApolloServer {
 
   const apolloServer = new CostAnalysisApolloServer({
     schema: await createSchema(),
+    playground: true,
+    introspection: true,
     validationRules: [
       depthLimit(10),
     ],
