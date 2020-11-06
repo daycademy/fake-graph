@@ -4,7 +4,7 @@ import { createConnection } from 'typeorm';
 import { ApolloServer } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import costAnalysis from 'graphql-cost-analysis';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 import { insertData } from './util/setup-util';
 import loaders from './loaders';
 import { createSchema } from './util/createSchema';
@@ -32,9 +32,9 @@ class CostAnalysisApolloServer extends ApolloServer {
 
 (async () => {
   const app = express();
-  if (process.env.NODE_ENV === 'production') {
+  /* if (process.env.NODE_ENV === 'production') {
     app.use(helmet());
-  }
+  } */
 
   await createConnection();
 
