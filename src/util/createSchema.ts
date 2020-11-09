@@ -7,6 +7,7 @@ const resolvers: [Function, ...Function[]] = [
   allResolvers.PostResolvers.GetPosts,
   allResolvers.UserResolvers.GetUsers,
   allResolvers.UserResolvers.Register,
+  allResolvers.NotificationSubscription,
 ];
 
 export const createSchema = () => buildSchema({

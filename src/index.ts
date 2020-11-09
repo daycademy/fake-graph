@@ -5,6 +5,7 @@ import { ApolloServer } from 'apollo-server-express';
 import depthLimit from 'graphql-depth-limit';
 import costAnalysis from 'graphql-cost-analysis';
 // import helmet from 'helmet';
+import { PubSub } from 'type-graphql';
 import { insertData } from './util/setup-util';
 import loaders from './loaders';
 import { createSchema } from './util/createSchema';
@@ -38,6 +39,8 @@ class CostAnalysisApolloServer extends ApolloServer {
 
   await createConnection();
 
+  const pubsub = PubSub();
+
   const apolloServer = new CostAnalysisApolloServer({
     schema: await createSchema(),
     playground: true,
@@ -45,7 +48,9 @@ class CostAnalysisApolloServer extends ApolloServer {
     validationRules: [
       depthLimit(10),
     ],
-    context: ({ req, res }) => ({ req, res, loaders }),
+    context: ({ req, res }) => ({
+      req, res, loaders, pubsub,
+    }),
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
