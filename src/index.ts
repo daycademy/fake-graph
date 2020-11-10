@@ -6,6 +6,7 @@ import depthLimit from 'graphql-depth-limit';
 import costAnalysis from 'graphql-cost-analysis';
 // import helmet from 'helmet';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
+import { createServer } from 'http';
 import { insertData } from './util/setup-util';
 import loaders from './loaders';
 import { createSchema } from './util/createSchema';
@@ -41,8 +42,9 @@ class CostAnalysisApolloServer extends ApolloServer {
 
   const pubsub = new RedisPubSub();
 
+  const schema = await createSchema();
   const apolloServer = new CostAnalysisApolloServer({
-    schema: await createSchema(),
+    schema,
     playground: true,
     introspection: true,
     validationRules: [
@@ -55,8 +57,11 @@ class CostAnalysisApolloServer extends ApolloServer {
 
   apolloServer.applyMiddleware({ app, cors: false });
 
+  const httpServer = createServer(app);
+  apolloServer.installSubscriptionHandlers(httpServer);
+
   const port = process.env.PORT || 4000;
-  app.listen(port, () => {
+  httpServer.listen(port, () => {
     console.log(`Server started at http://localhost:${port}/graphql`);
     insertData();
   });
