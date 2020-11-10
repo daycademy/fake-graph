@@ -1,21 +1,20 @@
+import { PubSubEngine } from 'graphql-subscriptions';
 import {
-  Ctx, Mutation, Resolver, Subscription,
+  PubSub, Mutation, Resolver, Subscription, Root, Arg,
 } from 'type-graphql';
-import { MyContext } from '../../MyContext';
 
 @Resolver()
 export class NotificationSubscription {
   @Mutation(() => String)
-  async newNotification(@Ctx() { pubsub }: MyContext): Promise<string> {
-    const notification = 'Some New Notification';
-    await pubsub.publish('NOTIFICATIONS', notification);
-    return notification;
+  async newNotification(@PubSub() pubSub: PubSubEngine, @Arg('title') title: string): Promise<string> {
+    await pubSub.publish('NOTIFICATIONS', title);
+    return title;
   }
 
   @Subscription(() => String, {
     topics: 'NOTIFICATIONS',
   })
-  async notifications(): Promise<any> {
-    return 'some notification';
+  async notifications(@Root() payload: String): Promise<Object> {
+    return `${new Date()} - ${payload}`;
   }
 }
