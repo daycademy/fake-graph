@@ -62,7 +62,8 @@ class CostAnalysisApolloServer extends ApolloServer {
 
   const port = process.env.PORT || 4000;
   httpServer.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}/graphql`);
+    console.log(`Server started at http://localhost:${port}${apolloServer.graphqlPath}`);
+    console.log(`Subscriptions started at ws://localhost:${port}${apolloServer.subscriptionsPath}`);
     insertData();
   });
 })();
