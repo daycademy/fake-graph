@@ -1,11 +1,11 @@
 import { CommonResolver } from './CommonResolver';
 import UserResolvers from './user';
 import PostResolvers from './post';
-import { NotificationSubscription } from './notification/NotificationSubscription';
+import NotificationResolvers from './notification';
 
 export default {
   CommonResolver,
   UserResolvers,
   PostResolvers,
-  NotificationSubscription,
+  NotificationResolvers,
 };
