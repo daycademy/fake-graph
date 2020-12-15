@@ -26,4 +26,4 @@ jobs:
           cd /var/www/fake-graph
           git pull origin master
           npm install
-          pm2 restart index
+          pm2 restart ts-node
