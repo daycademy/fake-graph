@@ -1,4 +1,5 @@
 node_modules
 dist
 database.sqlite
+database-test.sqlite
 dump.rdb

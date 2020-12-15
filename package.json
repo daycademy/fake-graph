@@ -41,7 +41,8 @@
     "start": "NODE_ENV=production nodemon --exec ts-node src/index.ts",
     "dev": "nodemon --exec ts-node src/index.ts",
     "build": "tsc",
-    "test": "jest --runInBand",
+    "db:setup": "ts-node ./src/test-util/setup.ts",
+    "test": "npm run db:setup && jest --runInBand",
     "test:watch": "jest --watchAll --runInBand"
   }
 }
