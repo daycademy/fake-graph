@@ -30,7 +30,7 @@ describe('Get User Query', () => {
     expect(response.data!.user).toBeDefined();
     expect(response.data!.user.id).toBe('1');
     expect(typeof response.data!.user.email).toBe('string');
-    expect(response.data!.user.role).toBe('ADMIN');
+    expect(typeof response.data!.user.role).toBe('string');
     expect(typeof response.data!.user.username).toBe('string');
     expect(typeof response.data!.user.fullname).toBe('string');
     expect(typeof response.data!.user.age).toBe('number');
