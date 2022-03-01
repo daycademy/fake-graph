@@ -1,6 +1,4 @@
-import {
-  Resolver, Mutation, UseMiddleware, Arg,
-} from 'type-graphql';
+import { Resolver, Mutation, UseMiddleware, Arg } from 'type-graphql';
 import { User } from '../../../entity/User';
 import { rateLimit } from '../../../middleware/rateLimit';
 import { RegisterUserInput } from './RegisterUserInput';
@@ -12,7 +10,8 @@ export class Register {
   @UseMiddleware(rateLimit)
   async register(@Arg('data') newUserData: RegisterUserInput): Promise<User> {
     /* eslint-disable-next-line */
-    const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const re =
+      /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     if (!re.test(newUserData.email)) {
       throw new Error('email is not in a valid format');
     }
@@ -22,12 +21,15 @@ export class Register {
       throw new Error('user already exists');
     }
 
-    return User.create({
+    const id = await User.insert({
       email: newUserData.email,
       age: newUserData.age,
       role: UserRole.USER.toString(),
       fullname: newUserData.fullname,
       username: newUserData.username,
     });
+
+    const newUser = await User.findOne({ where: { id: id.raw } });
+    return newUser!;
   }
 }

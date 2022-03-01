@@ -1,8 +1,10 @@
+import { ObjectType, Field, Int, Directive } from 'type-graphql';
 import {
-  ObjectType, Field, Int, Directive,
-} from 'type-graphql';
-import {
-  Entity, Column, OneToMany, BaseEntity, PrimaryGeneratedColumn,
+  Entity,
+  Column,
+  OneToMany,
+  BaseEntity,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Post } from './Post';
 import { UserRole } from './enums/UserRole';
